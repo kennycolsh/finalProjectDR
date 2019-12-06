@@ -14,7 +14,7 @@ class CarsDAO:
         sql="insert into cars (reg, make, model, price, totalvotes) values (%s,%s,%s,%s,%s)"
         cursor.execute(sql, values)
         self.db.commit()
-        return 1
+        return cursor.lastrowid
         #return 1
 
     

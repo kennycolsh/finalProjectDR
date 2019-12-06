@@ -5,7 +5,7 @@ import mysql.connector
 
 
 #app = Flask(__name__, static_url_path='', static_folder='.')
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder='.')
 #cars = [
 #    {
  #       "id":1, "reg":"181 G 1234","make":"Ford", "model":"Modeo", "price":18000, "totalvotes":2
@@ -136,15 +136,15 @@ def addvote(id):
        abort(400)
     
     reqjson = request.json
-    #newvote =  parseInt(reqjson['totalvotes'])
-    #oldvote =  parseInt(foundCars['totalvotes'])
-
+    newvalue =int(reqjson['totalvotes'])
+    oldvalue = int(foundCars['totalvotes'])
+    finalvote =oldvalue + newvalue
     #finalvote = newvote + oldvote
 
     if 'totalvotes' in reqjson:
         foundCars['totalvotes'] =  reqjson['totalvotes'] 
     
-    values =(foundCars['totalvotes'] ,foundCars['id'])
+    values =(finalvote,foundCars['id'])
     
     carsDAO.updateleader(values)
     return jsonify(foundCars)
@@ -153,11 +153,11 @@ def addvote(id):
 ##################ERROR HANDLING ########################################################
 @app.errorhandler(404)
 def not_found404(error):
-    return make_response( jsonify( {'error':'Not found' }), 404)
+    return make_response( jsonify( {'error':'lNot found' }), 404)
 
 @app.errorhandler(400)
 def not_found400(error):
-    return make_response( jsonify( {'error':'Bad Request' }), 400)
+    return make_response( jsonify( {'error':'kBad Request' }), 400)
     
 if __name__ == '__main__' :
     app.run(debug= True)
