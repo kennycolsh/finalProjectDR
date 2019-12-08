@@ -20,6 +20,7 @@
                     <th>Make</th>
                     <th>Model</th>
                     <th>Price</th>
+                    <th>Total_Votes</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
@@ -30,6 +31,7 @@
         <form>
             <span id="createLabel">Create a</span> <span id="updateLabel">update</span> Car
             <hr />
+            <input type="hidden" name="id" >
             <div class="form-group col-sm-6">
                 <label>Reg</label>
                 <input type="text" class="form-control" name="reg" >
@@ -51,7 +53,7 @@
                 <label for="price">Price</label>
                 <input type="number" class="form-control" name="price">
             </div>
-        
+            <input type="hidden" name="totalvotes" >
         </form>
         <div>
             <span><button id="doCreateButton" onclick="doCreate()" class="btn btn-success">Create</button></span>
@@ -108,9 +110,9 @@ function createCar(car){
 }
 function updateCar(car){
             //var car = {"reg":"181 G 1234","make":"Ford","model":"Modeo","price":"00"}
-            console.log(JSON.stringify(car));
+           // console.log(JSON.stringify(car));
             $.ajax({
-            "url": "http://127.0.0.1:5000/cars/"+encodeURI(car.reg),
+            "url": "http://127.0.0.1:5000/cars/"+encodeURI(car.id),
             "method":"PUT",
             "data":JSON.stringify(car),
             "dataType": "JSON",
@@ -124,19 +126,16 @@ function updateCar(car){
             }
             });
 }
-function deleteCar(){
-        //var car = {"reg":"12 D 1234"}
-        //console.log(JSON.stringify(car));
+function deleteCar(id){
+    console.log(JSON.stringify('deleting'));
         $.ajax({
-        "url": "http://127.0.0.1:5000/cars/"+encodeURI(car.
-        reg),
+        "url": "http://127.0.0.1:5000/cars/"+encodeURI(id),
         "method":"DELETE",
         "data":"",
         "dataType": "JSON",
         contentType: "application/json; charset=utf-8",
         "success":function(result){
-       // console.log(result);
-        //document.getElementById("output").innerText = JSON.stringify(result);
+     
         },
         "error":function(xhr,status,error){
         console.log("error: "+status+" msg:"+error);
@@ -157,10 +156,14 @@ function deleteCar(){
         //get the id attribute from the row(ie. reg)
         // Call the AJAX that will delete the car from the server
     function doUpdate() {
+       
         var car = getCarFromForm();
-        var rowElement = document.getElementById(car.reg)
+        var rowElement = document.getElementById(car.id)
+       
+        updateCar(car);
+        //debugger;
         setCarInRow(rowElement, car)
-// good place to ajax update server
+        //debugger;
         clearForm()
         showViewAll()
     }
@@ -168,19 +171,22 @@ function deleteCar(){
    //get car info from tr
     function getCarFromRow(rowElement) {
         var car = {}
-        debugger;
+        //debugger;
+        car.id = rowElement.getAttribute('id')
         car.reg = rowElement.cells[0].firstChild.textContent
         car.make = rowElement.cells[1].firstChild.textContent
         car.model = rowElement.cells[2].firstChild.textContent
         car.price = rowElement.cells[3].firstChild.textContent
+        car.totalvotes = rowElement.cells[4].firstChild.textContent
         return car
     }
    //fill in the form
     function populateFormWithCar(car) {
         //debugger;
         var form = document.getElementById('createUpdateForm')
-        form.querySelector('input[name="reg"]').disabled = true
-
+        form.querySelector('input[name="id"]').disabled = true
+        form.querySelector('input[name="id"]').value = car.id
+        form.querySelector('input[name="totalvotes"]').value = car.totalvotes
         form.querySelector('input[name="reg"]').value = car.reg
         form.querySelector('select[name="make"]').value = car.make
         form.querySelector('input[name="model"]').value = car.model
@@ -189,11 +195,13 @@ function deleteCar(){
 
       //Delete function    
     function doDelete(r) {
-        var tableElement = document.getElementById('carTable')
-        var index = r.parentNode.parentNode.rowIndex;
+       // debugger;
+        var tableElement = document.getElementById('carTable');
+        var rowElement =r.parentNode.parentNode;
+        var index = rowElement.rowIndex;
+        deleteCar(rowElement.getAttribute('id'));
         tableElement.deleteRow(index);
-        //get the car reg ajx to dete car from server
-    }
+        }
     ////update function
     function showUpdate(buttonElement) {
      
@@ -214,19 +222,23 @@ function deleteCar(){
     function getCarFromForm() {
         var form = document.getElementById('createUpdateForm')
         var car = {}
+        car.id = form.querySelector('input[name="id"]').value
         car.reg = form.querySelector('input[name="reg"]').value
         car.make = form.querySelector('select[name="make"]').value
         car.model = form.querySelector('input[name="model"]').value
         car.price = form.querySelector('input[name="price"]').value
-        console.log(JSON.stringify(car))
+        car.totalvotes = form.querySelector('input[name="totalvotes"]').value
+       // console.log(JSON.stringify(car))
         return car
     }
     function setCarInRow(rowElement, car) {
-        rowElement.cells[0].firstChild.textContent = car.id
-        rowElement.cells[1].firstChild.textContent = car.reg
-        rowElement.cells[2].firstChild.textContent = car.make
-        rowElement.cells[3].firstChild.textContent = car.model
-        rowElement.cells[4].firstChild.textContent = car.price
+        //debugger;
+       // rowElement.cells[0].firstChild.textContent = car.id
+        rowElement.cells[0].firstChild.textContent = car.reg
+        rowElement.cells[1].firstChild.textContent = car.make
+        rowElement.cells[2].firstChild.textContent = car.model
+        rowElement.cells[3].firstChild.textContent = car.price
+        rowElement.cells[4].firstChild.textContent = car.totalvotes
     }
 
 
@@ -269,7 +281,7 @@ function deleteCar(){
         car.model = form.querySelector('input[name="model"]').value
         car.price = form.querySelector('input[name="price"]').value
         car.totalvotes =0
-       debugger;
+      
         createCar(car)
         
        
@@ -280,6 +292,7 @@ function deleteCar(){
         var rowElement = tableElement.insertRow(-1)
         rowElement.setAttribute('id',car.id)
         // set attribure here
+        //debugger;
         var cellElement1 = rowElement.insertCell(0);
         cellElement1.innerHTML = car.reg
 
@@ -293,10 +306,13 @@ function deleteCar(){
         cellElement4.innerHTML = car.price
 
         var cellElement5 = rowElement.insertCell(4);
-        cellElement5.innerHTML = '<button onclick="showUpdate(this)" class="btn btn-primary">Update</button>'
+        cellElement5.innerHTML = car.totalvotes
 
         var cellElement6 = rowElement.insertCell(5);
-        cellElement6.innerHTML = '<button onclick="doDelete(this)" class="btn btn-warning"> Delete</button>'
+        cellElement6.innerHTML = '<button onclick="showUpdate(this)" class="btn btn-primary">Update</button>'
+
+        var cellElement7 = rowElement.insertCell(6);
+        cellElement7.innerHTML = '<button onclick="doDelete(this)" class="btn btn-warning"> Delete</button>'
     }
 
 
@@ -305,7 +321,7 @@ function deleteCar(){
     function clearForm() {
         var form = document.getElementById('createUpdateForm')
 
-        form.querySelector('input[name="reg"]').disabled = false
+        form.querySelector('input[name="reg"]').value = ''
         form.querySelector('input[name="reg"]').value = ''
         form.querySelector('select[name="make"]').value = ''
         form.querySelector('input[name="model"]').value = ''

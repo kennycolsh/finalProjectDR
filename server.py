@@ -102,8 +102,8 @@ def update(id):
         foundCars['totalvotes'] =reqjson['totalvotes']
         
 
+    #values =(foundCars['reg'],foundCars['make'],foundCars['model'],foundCars['price'],foundCars['totalvotes'],foundCars['id'])
     values =(foundCars['reg'],foundCars['make'],foundCars['model'],foundCars['price'],foundCars['totalvotes'],foundCars['id'])
-    
     carsDAO.update(values)
     return jsonify(foundCars)
 
