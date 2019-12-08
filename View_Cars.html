@@ -66,11 +66,13 @@
 </body>
 </html>
 <script>
+    host= window.location.origin
     getAll();
     function getAll(){
         //debugger;
         $.ajax({
-        "url": "http://127.0.0.1:5000/cars",
+      //  "url": "http://127.0.0.1:5000/cars",
+        "url": host+ "/cars",
         "method":"GET",
         "data":"",
         "dataType": "JSON",
@@ -88,7 +90,7 @@
 function createCar(car){
         console.log(JSON.stringify(car));
         $.ajax({
-        "url": "http://127.0.0.1:5000/cars",
+        "url": host+ "cars",
         "method":"POST",
         "data":JSON.stringify(car),
         "dataType": "JSON",
@@ -110,7 +112,7 @@ function createCar(car){
 function updateCar(car){
            // console.log(JSON.stringify(car));
             $.ajax({
-            "url": "http://127.0.0.1:5000/cars/"+encodeURI(car.id),
+            "url": host+ "/cars/"+encodeURI(car.id),
             "method":"PUT",
             "data":JSON.stringify(car),
             "dataType": "JSON",
@@ -126,7 +128,7 @@ function updateCar(car){
 function deleteCar(id){
     console.log(JSON.stringify('deleting'));
         $.ajax({
-        "url": "http://127.0.0.1:5000/cars/"+encodeURI(id),
+        "url": host+ "/cars/"+encodeURI(id),
         "method":"DELETE",
         "data":"",
         "dataType": "JSON",
