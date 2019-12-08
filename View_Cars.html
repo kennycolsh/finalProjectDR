@@ -86,7 +86,6 @@
         });
 }
 function createCar(car){
-        //var car = {"reg":"12 D 1234","make":"Fiat","model":"Punto","price":3000}
         console.log(JSON.stringify(car));
         $.ajax({
         "url": "http://127.0.0.1:5000/cars",
@@ -109,7 +108,6 @@ function createCar(car){
         });
 }
 function updateCar(car){
-            //var car = {"reg":"181 G 1234","make":"Ford","model":"Modeo","price":"00"}
            // console.log(JSON.stringify(car));
             $.ajax({
             "url": "http://127.0.0.1:5000/cars/"+encodeURI(car.id),
@@ -119,7 +117,6 @@ function updateCar(car){
             contentType: "application/json; charset=utf-8",
             "success":function(result){
             //console.log(result);
-            //document.getElementById("output").innerText = JSON.stringify(result);
             },
             "error":function(xhr,status,error){
             console.log("error: "+status+" msg:"+error);
@@ -142,26 +139,14 @@ function deleteCar(id){
         }
 });
 }
-//TODO
-    //delete the rows from the table
-    //
-    //on load call showViewAll
-        //call AJAX that gets all the cars
-        //for each car call the functionn that will insert it into the table
-    //oncreate
-        //call the AJAX that will create a car on the server
-    //onUpdate
-        // Call the AJAX that will update the car on the server
-    //OnDelete
-        //get the id attribute from the row(ie. reg)
-        // Call the AJAX that will delete the car from the server
+
     function doUpdate() {
        
         var car = getCarFromForm();
         var rowElement = document.getElementById(car.id)
        
         updateCar(car);
-        //debugger;
+       
         setCarInRow(rowElement, car)
         //debugger;
         clearForm()

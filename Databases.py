@@ -1,12 +1,20 @@
 import mysql.connector
+#import dbconfig as config
+from dbconfig import Configer
 
 class CarsDAO:
-    db=""
-    def __init__(self):
-        self.db = mysql.connector.connect(
-        host ="localhost", user="root",
-        password="",database="popcars"
-        )
+    db = mysql.connector.connect(
+        host =Configer.mysql['host'],
+        user =Configer.mysql['username'],
+        password=Configer.mysql["password"],
+        database=Configer.mysql["database"]
+    )
+    
+  
+       # self.db = mysql.connector.connect(
+        #host ="localhost", user="root",
+       # password="",database="popcars"
+       # )
 
     def create(self,values):
         
