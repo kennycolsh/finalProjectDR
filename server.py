@@ -71,38 +71,48 @@ def create():
     newid = carsDAO.create(values)
     car['id']= newid
     return jsonify(car)
+
     
  #UPDATE   
  #curl -i -H "Content-Type:application/json" -X PUT -d "{\"reg\":\"12 D 1234\",\"make\":\"Fiat\",\"model\":\"uno\",\"price\":9900}" http://localhost:5000/cars/1
  #curl -i -H "Content-Type:application/json" -X PUT -d "{\"reg\":\"12 D 1234\",\"make\":\"Fiat\",\"model\":\"cied\",\"price\":\"12345\",\"totalvotes\":\"1\" }" http://localhost:5000/cars/10
 @app.route('/cars/<int:id>', methods=['PUT'])
 def update(id):
+    newid = int(id)
     foundCars=carsDAO.findbyid(id)
+    #jsonify(foundCars)
     if not foundCars:
       abort(404)
-
+    
     if not request.json:
        abort(400)
     
     reqjson = request.json
-
+    print('here1')
+    print(newid)
+    print(foundCars)
     if 'reg' in reqjson: 
+       # reg = reqjson['reg']
         foundCars['reg'] =reqjson['reg']
         
     if 'make' in reqjson: 
+        #make =reqjson['make']
         foundCars['make'] =reqjson['make']
         
     if 'model' in reqjson: 
+        #model =reqjson['model']
         foundCars['model'] =reqjson['model']
         
     if 'price' in reqjson: 
+        #price = reqjson['price']
         foundCars['price'] =reqjson['price']
         
     if 'totalvotes' in reqjson: 
+        #totalvotes =reqjson['totalvotes']
         foundCars['totalvotes'] =reqjson['totalvotes']
         
 
-    #values =(foundCars['reg'],foundCars['make'],foundCars['model'],foundCars['price'],foundCars['totalvotes'],foundCars['id'])
+    #values =(reg,make,model,price,totalvotes,newid)
     values =(foundCars['reg'],foundCars['make'],foundCars['model'],foundCars['price'],foundCars['totalvotes'],foundCars['id'])
     carsDAO.update(values)
     return jsonify(foundCars)
@@ -112,7 +122,8 @@ def update(id):
 @app.route('/cars/<int:id>', methods=['DELETE'])
 def delete(id):
     carsDAO.delete(id)
-    return  jsonify( { 'Car Removed':True })
+    #return 2
+    return  jsonify( { ' Car Removed':True   })
 
 ########VOTING#######################################################################
 

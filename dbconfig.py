@@ -1,9 +1,14 @@
 import mysql.connector
 class Configer:
     mysql={
-        'host' :"localhost", 
-        'username':"root",
-        'password':"",
-        'database':"popcars"
+        'host' :"localhost", #"kennycolsh.mysql.pythonanywhere-services.com", 
+        'username': "root", #"kennycolsh",
+        'password': "" , #"Lesharp12",
+        'database':"popcars" ##"kennycolsh$popcars"
     }
+
+           # self.db = mysql.connector.connect(
+        #host ="localhost", user="root",
+       # password="",database="popcars"
+       # )
 configer = Configer()

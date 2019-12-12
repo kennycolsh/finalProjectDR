@@ -14,7 +14,7 @@
     </div>
     <div>
         <table id="carTable" class="table table-condensed table-bordered table-striped table-hover" style="font-size: 90%;  font-family: narrow;padding:15px;">
-            <tbody style="font-size: 90%; ">
+            <tbody style="font-size: 90%; width:100%; ">
                 <tr >
                     <th>Reg</th>
                     <th>Make</th>
@@ -89,8 +89,9 @@
 }
 function createCar(car){
         console.log(JSON.stringify(car));
+        debugger;
         $.ajax({
-        "url": host+ "cars",
+        "url": host+ "/cars",
         "method":"POST",
         "data":JSON.stringify(car),
         "dataType": "JSON",
@@ -126,6 +127,7 @@ function updateCar(car){
             });
 }
 function deleteCar(id){
+    debugger;
     console.log(JSON.stringify('deleting'));
         $.ajax({
         "url": host+ "/cars/"+encodeURI(id),
@@ -134,7 +136,7 @@ function deleteCar(id){
         "dataType": "JSON",
         contentType: "application/json; charset=utf-8",
         "success":function(result){
-     
+            
         },
         "error":function(xhr,status,error){
         console.log("error: "+status+" msg:"+error);
@@ -275,6 +277,7 @@ function deleteCar(id){
     }
     function addCarToTable(car) {
        //call this fuction for each car returned in the get all
+       //debugger;
         var tableElement = document.getElementById('carTable')
         var rowElement = tableElement.insertRow(-1)
         rowElement.setAttribute('id',car.id)
