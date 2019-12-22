@@ -1,6 +1,6 @@
 import mysql.connector
-from sqlalchemy import create_engine
-from snowflake.sqlalchemy import URL
+#from sqlalchemy import create_engine
+#from snowflake.sqlalchemy import URL
 #import dbconfig as config
 from dbconfig import Configer
 #from validate import Configsnow
@@ -9,7 +9,9 @@ class CarsDAO:
         host =Configer.mysql['host'],
         user =Configer.mysql['username'],
         password=Configer.mysql["password"],
-        database=Configer.mysql["database"]
+        port=Configer.mysql["port"],
+        database=Configer.mysql["database"],
+        use_pure=True
     )
 
     
