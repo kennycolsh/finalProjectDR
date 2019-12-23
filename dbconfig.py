@@ -4,8 +4,8 @@ class Configer:
         'host' :"localhost", #"kennycolsh.mysql.pythonanywhere-services.com", 
         'username': "root", #"kennycolsh",
         'password': "Lesharp12" , #"Lesharp12",
-        'port': "3308" , #"Lesharp12",
-        'database':"popcars" ##"kennycolsh$popcars"
+        #'port': "3308" , #"Lesharp12",
+        'database':"kennycolsh$popcars" ##"kennycolsh$popcars"
     }
 
            # self.db = mysql.connector.connect(
