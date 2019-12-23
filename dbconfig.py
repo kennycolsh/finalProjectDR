@@ -1,8 +1,8 @@
 import mysql.connector
 class Configer:
     mysql={
-        'host' :"localhost", #"kennycolsh.mysql.pythonanywhere-services.com", 
-        'username': "root", #"kennycolsh",
+        'host' : "kennycolsh.mysql.pythonanywhere-services.com",# "localhost",
+        'username': "kennycolsh", #"root",
         'password': "Lesharp12" , #"Lesharp12",
         #'port': "3308" , #"Lesharp12",
         'database':"kennycolsh$popcars" ##"kennycolsh$popcars"
