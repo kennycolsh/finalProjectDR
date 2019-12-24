@@ -1,0 +1,9 @@
+create table cars ( 
+id int NOT NULL auto_increment, 
+reg varchar(100), 
+make varchar(100), 
+model varchar(100), 
+price float,
+totalvotes int, 
+PRIMARY KEY(id) 
+); 
